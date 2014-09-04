@@ -1,0 +1,5 @@
+prj/obj/*
+prj/lst/*
+*.bak
+*.dep
+*.User

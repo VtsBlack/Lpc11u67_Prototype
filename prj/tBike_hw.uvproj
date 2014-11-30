@@ -355,9 +355,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>CORE_M0PLUS</Define>
+              <Define>CORE_M0PLUS, NO_BOARD_LIB</Define>
               <Undefine></Undefine>
-              <IncludePath>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_common;..\lpcopen_2_06_keil_iar_manley_11u68\software\CMSIS\CMSIS\Include;..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x;..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\config_11U6X</IncludePath>
+              <IncludePath>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_common;..\lpcopen_2_06_keil_iar_manley_11u68\software\CMSIS\CMSIS\Include;..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x;..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\config_11U6X;..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_board\boards_11u6x\manley_11u68;..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_board\board_common</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -399,9 +399,14 @@
           <GroupName>Startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_LPC11U6x.s</FileName>
+              <FileName>keil_startup_lpc11u6x.s</FileName>
               <FileType>2</FileType>
-              <FilePath>.\startup_LPC11U6x.s</FilePath>
+              <FilePath>..\lpcopen_2_06_keil_iar_manley_11u68\applications\lpc11u6x\startup_code\keil_startup_lpc11u6x.s</FilePath>
+            </File>
+            <File>
+              <FileName>sysinit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lpcopen_2_06_keil_iar_manley_11u68\applications\lpc11u6x\startup_code\sysinit.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -465,6 +470,11 @@
               <FileName>syscon_11u6x.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\syscon_11u6x.c</FilePath>
+            </File>
+            <File>
+              <FileName>sysinit_11u6x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\sysinit_11u6x.c</FilePath>
             </File>
           </Files>
         </Group>

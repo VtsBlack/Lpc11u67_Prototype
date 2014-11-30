@@ -163,24 +163,7 @@
           <Name>UL2CM3(-O4303 -S0 -C0 -FO7  -FN1 -FC800 -FD10000000 -FF0LPC1xxx_96_32 -FL020000 -FS00</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint>
-        <Bp>
-          <Number>0</Number>
-          <Type>0</Type>
-          <LineNumber>89</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>1034</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>C:\GIT_DEV\NXP\tBike\source\main.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-      </Breakpoint>
+      <Breakpoint/>
       <WatchWindow1>
         <Ww>
           <count>0</count>
@@ -219,20 +202,6 @@
       </DebugFlag>
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
-      <SystemViewers>
-        <Entry>
-          <Name>System Viewer\GPIO_PORT</Name>
-          <WinId>35903</WinId>
-        </Entry>
-        <Entry>
-          <Name>System Viewer\IOCON</Name>
-          <WinId>35904</WinId>
-        </Entry>
-        <Entry>
-          <Name>System Viewer\USART0</Name>
-          <WinId>35905</WinId>
-        </Entry>
-      </SystemViewers>
     </TargetOption>
   </Target>
 
@@ -250,11 +219,27 @@
       <Focus>0</Focus>
       <ColumnNumber>20</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>139</TopLine>
-      <CurrentLine>144</CurrentLine>
+      <TopLine>132</TopLine>
+      <CurrentLine>151</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\startup_LPC11U6x.s</PathWithFileName>
-      <FilenameWithoutPath>startup_LPC11U6x.s</FilenameWithoutPath>
+      <PathWithFileName>..\lpcopen_2_06_keil_iar_manley_11u68\applications\lpc11u6x\startup_code\keil_startup_lpc11u6x.s</PathWithFileName>
+      <FilenameWithoutPath>keil_startup_lpc11u6x.s</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>2</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>10</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>15</TopLine>
+      <CurrentLine>34</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\lpcopen_2_06_keil_iar_manley_11u68\applications\lpc11u6x\startup_code\sysinit.c</PathWithFileName>
+      <FilenameWithoutPath>sysinit.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -268,14 +253,14 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>2</FileNumber>
+      <FileNumber>3</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>1</ColumnNumber>
+      <ColumnNumber>33</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>76</TopLine>
-      <CurrentLine>96</CurrentLine>
+      <TopLine>114</TopLine>
+      <CurrentLine>132</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\source\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -300,14 +285,14 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>4</GroupNumber>
-      <FileNumber>3</FileNumber>
+      <FileNumber>4</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>54</TopLine>
-      <CurrentLine>160</CurrentLine>
+      <TopLine>135</TopLine>
+      <CurrentLine>145</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\source\RTX_Conf_CM.c</PathWithFileName>
       <FilenameWithoutPath>RTX_Conf_CM.c</FilenameWithoutPath>
@@ -324,33 +309,17 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>4</FileNumber>
+      <FileNumber>5</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
       <ColumnNumber>26</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>59</TopLine>
-      <CurrentLine>63</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\gpio_11u6x.c</PathWithFileName>
       <FilenameWithoutPath>gpio_11u6x.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>5</GroupNumber>
-      <FileNumber>5</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>84</TopLine>
-      <CurrentLine>81</CurrentLine>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\uart_0_11u6x.c</PathWithFileName>
-      <FilenameWithoutPath>uart_0_11u6x.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -362,11 +331,11 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>174</TopLine>
+      <CurrentLine>185</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_common\ring_buffer.c</PathWithFileName>
-      <FilenameWithoutPath>ring_buffer.c</FilenameWithoutPath>
+      <PathWithFileName>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\uart_0_11u6x.c</PathWithFileName>
+      <FilenameWithoutPath>uart_0_11u6x.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -376,13 +345,13 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>12</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>122</TopLine>
+      <CurrentLine>137</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\clock_11u6x.c</PathWithFileName>
-      <FilenameWithoutPath>clock_11u6x.c</FilenameWithoutPath>
+      <PathWithFileName>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_common\ring_buffer.c</PathWithFileName>
+      <FilenameWithoutPath>ring_buffer.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -392,10 +361,26 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>25</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>26</TopLine>
-      <CurrentLine>49</CurrentLine>
+      <TopLine>274</TopLine>
+      <CurrentLine>311</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\clock_11u6x.c</PathWithFileName>
+      <FilenameWithoutPath>clock_11u6x.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>5</GroupNumber>
+      <FileNumber>9</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>11</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>37</TopLine>
+      <CurrentLine>53</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\iocon_11u6x.c</PathWithFileName>
       <FilenameWithoutPath>iocon_11u6x.c</FilenameWithoutPath>
@@ -404,7 +389,7 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>9</FileNumber>
+      <FileNumber>10</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -420,7 +405,7 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>10</FileNumber>
+      <FileNumber>11</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -431,6 +416,22 @@
       <bDave2>0</bDave2>
       <PathWithFileName>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\syscon_11u6x.c</PathWithFileName>
       <FilenameWithoutPath>syscon_11u6x.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>5</GroupNumber>
+      <FileNumber>12</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>2</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>123</TopLine>
+      <CurrentLine>160</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\sysinit_11u6x.c</PathWithFileName>
+      <FilenameWithoutPath>sysinit_11u6x.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

@@ -48,7 +48,7 @@
           <OutputName>tBike_hw</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>0</CreateHexFile>
+          <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\lst\</ListingPath>
@@ -119,7 +119,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>1</UseSimulator>
+            <UseSimulator>0</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -130,7 +130,7 @@
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
           </Simulator>
           <Target>
-            <UseTarget>0</UseTarget>
+            <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -141,7 +141,7 @@
             <RestoreTracepoints>1</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>1</TargetSelection>
+          <TargetSelection>13</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -155,7 +155,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver>BIN\UL2CM3.DLL</Driver>
+            <Driver>BIN\CMSIS_AGDI.dll</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -207,7 +207,7 @@
             <GenPPlst>0</GenPPlst>
             <AdsCpuType>"Cortex-M0+"</AdsCpuType>
             <RvctDeviceName></RvctDeviceName>
-            <mOS>0</mOS>
+            <mOS>1</mOS>
             <uocRom>0</uocRom>
             <uocRam>0</uocRam>
             <hadIROM>1</hadIROM>
@@ -355,9 +355,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define></Define>
+              <Define>CORE_M0PLUS</Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_common;..\lpcopen_2_06_keil_iar_manley_11u68\software\CMSIS\CMSIS\Include;..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x;..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\config_11U6X</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -417,16 +417,54 @@
         </Group>
         <Group>
           <GroupName>core</GroupName>
+        </Group>
+        <Group>
+          <GroupName>RTX CFG</GroupName>
           <Files>
             <File>
-              <FileName>core_cm0.c</FileName>
+              <FileName>RTX_Conf_CM.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\lpc1100\core_cm0.c</FilePath>
+              <FilePath>..\source\RTX_Conf_CM.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>LPC OPEN</GroupName>
+          <Files>
+            <File>
+              <FileName>gpio_11u6x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\gpio_11u6x.c</FilePath>
             </File>
             <File>
-              <FileName>system_LPC11Uxx.c</FileName>
+              <FileName>uart_0_11u6x.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\lpc1100\system_LPC11Uxx.c</FilePath>
+              <FilePath>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\uart_0_11u6x.c</FilePath>
+            </File>
+            <File>
+              <FileName>ring_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_common\ring_buffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_11u6x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\clock_11u6x.c</FilePath>
+            </File>
+            <File>
+              <FileName>iocon_11u6x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\iocon_11u6x.c</FilePath>
+            </File>
+            <File>
+              <FileName>chip_11u6x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\chip_11u6x.c</FilePath>
+            </File>
+            <File>
+              <FileName>syscon_11u6x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\syscon_11u6x.c</FilePath>
             </File>
           </Files>
         </Group>

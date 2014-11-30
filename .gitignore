@@ -3,3 +3,5 @@ prj/lst/*
 *.bak
 *.dep
 *.User
+lpcopen_2_06_keil_iar_manley_11u68/applications/*
+lpcopen_2_06_keil_iar_manley_11u68/software/freertos/*

@@ -9,39 +9,100 @@
 /******************************************************************************/
 
 #include <stdint.h>
+#include <string.h>
 
-#include "LPC11Uxx.h"
+#include "chip.h"
 
-volatile uint32_t msTicks = 0; // counter for 1ms SysTicks
+#include "RTL.h"
+
+
+const uint32_t OscRateIn = 12000000;
+const uint32_t RTCOscRateIn = 32768;
+
+__task void test(void);
+
+/**
+ * Initialize the system
+ *
+ * @param  none
+ * @return none
+ *
+ * @brief  Setup the microcontroller system.
+ *         Initialize the System.
+ */
+//void SystemInit2 (void) {
+//  volatile uint32_t i;
+
+//  LPC_SYSCON->PDRUNCFG     &= ~(1 << 5);          /* Power-up System Osc      */
+//  LPC_SYSCON->SYSOSCCTRL    = 0;
+//  for (i = 0; i < 200; i++) __NOP();
+
+
+
+
+
+//  /* System clock to the IOCON needs to be enabled or
+//  most of the I/O related peripherals won't work. */
+//  LPC_SYSCON->SYSAHBCLKCTRL |= (1<<16);
+
+//}
+
+
+static void Init_UART_PinMux(void)
+{
+	Chip_IOCON_PinMuxSet(LPC_IOCON, 0, 18, (IOCON_FUNC1 | IOCON_MODE_INACT | IOCON_DIGMODE_EN));
+	Chip_IOCON_PinMuxSet(LPC_IOCON, 0, 19, (IOCON_FUNC1 | IOCON_MODE_INACT | IOCON_DIGMODE_EN));
+
+}
+
+void SER_Init (void) {
+	
+	Init_UART_PinMux();
+	
+  Chip_UART0_Init(LPC_USART0);
+	Chip_UART0_SetBaud(LPC_USART0, 115200);
+	Chip_UART0_ConfigData(LPC_USART0, (UART0_LCR_WLEN8 | UART0_LCR_SBS_1BIT));
+	Chip_UART0_SetupFIFOS(LPC_USART0, (UART0_FCR_FIFO_EN | UART0_FCR_TRG_LEV2));
+	Chip_UART0_TXEnable(LPC_USART0);
+}
 
 //====================================================================================
 int main()
 {
-	uint32_t timer_mark;
+	#define LED 2
+	
+	SystemCoreClockUpdate();
 
 	// Enable GPIO Clock ( powers the GPIO peripheral )
-	LPC_SYSCON->SYSAHBCLKCTRL |= (1<<6);
+	//LPC_SYSCON->SYSAHBCLKCTRL |= (1<<6);
 
 	// Select GPIO Mode and disable analog mode, refer to User Manual - UM10524
-	LPC_IOCON->PIO0_7 = 0;
+	//LPC_IOCON->PIO0_2 = 0;
+	//LPC_IOCON->PIO1_20 = 0;
+	
+	Chip_GPIO_Init(LPC_GPIO);
+
 
 	// Set the pin direction, set high for an output
-	LPC_GPIO->DIR[0] |= 1<<7;
+	Chip_GPIO_SetPinDIR(LPC_GPIO, 0, 2, 1);
 
-	// Init SysTick
-	SysTick_Config(SystemCoreClock / 1000);				// Generate interrupt every 1 ms
-
-	for(;;)
-	{
-		timer_mark = msTicks;					// Take timer snapshot 
-		while(msTicks < (timer_mark + 100));	// Wait until 100ms has passed
-		LPC_GPIO->NOT[0] = 1<<7;
-	}
+	SER_Init();
+	
+	os_sys_init(test);
 }
 
-//====================================================================================
-void SysTick_Handler(void)
+
+__task void test(void)
 {
-	msTicks++;
+	for(;;)
+	{
+		os_dly_wait(50);
+		Chip_UART0_Send(LPC_USART0, "Sveiki", strlen("Sveiki"));
+		Chip_GPIO_WriteDirBit(LPC_GPIO, 0, 2, 0);
+
+		os_dly_wait(100);
+		Chip_GPIO_WriteDirBit(LPC_GPIO, 0, 2, 1);
+
+	}
 }
 

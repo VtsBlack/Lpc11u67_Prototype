@@ -10,6 +10,8 @@
 
 #include <stdint.h>
 #include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #include "chip.h"
 
@@ -19,43 +21,37 @@
 const uint32_t OscRateIn = 12000000;
 const uint32_t RTCOscRateIn = 32768;
 
+
+/* Transmit and receive ring buffers */
+STATIC RINGBUFF_T txring, rxring;
+
+/* Transmit and receive ring buffer sizes */
+#define UART_SRB_SIZE 128	/* Send */
+#define UART_RRB_SIZE 32	/* Receive */
+
+/* Transmit and receive buffers */
+static uint8_t rxbuff[UART_RRB_SIZE], txbuff[UART_SRB_SIZE];
+
+
+const char inst1[] = "LPC11u6x UART example using ring buffers\r\n";
+const char inst2[] = "Press a key to echo it back or ESC to quit\r\n";
+
+char message[256] = {0};
+
+
 __task void test(void);
-
-/**
- * Initialize the system
- *
- * @param  none
- * @return none
- *
- * @brief  Setup the microcontroller system.
- *         Initialize the System.
- */
-//void SystemInit2 (void) {
-//  volatile uint32_t i;
-
-//  LPC_SYSCON->PDRUNCFG     &= ~(1 << 5);          /* Power-up System Osc      */
-//  LPC_SYSCON->SYSOSCCTRL    = 0;
-//  for (i = 0; i < 200; i++) __NOP();
-
-
-
-
-
-//  /* System clock to the IOCON needs to be enabled or
-//  most of the I/O related peripherals won't work. */
-//  LPC_SYSCON->SYSAHBCLKCTRL |= (1<<16);
-
-//}
 
 
 static void Init_UART_PinMux(void)
 {
-	Chip_IOCON_PinMuxSet(LPC_IOCON, 0, 18, (IOCON_FUNC1 | IOCON_MODE_INACT | IOCON_DIGMODE_EN));
-	Chip_IOCON_PinMuxSet(LPC_IOCON, 0, 19, (IOCON_FUNC1 | IOCON_MODE_INACT | IOCON_DIGMODE_EN));
-
+	Chip_IOCON_PinMuxSet(LPC_IOCON, 0, 18, (IOCON_FUNC1 | IOCON_MODE_PULLUP | IOCON_DIGMODE_EN));
+	Chip_IOCON_PinMuxSet(LPC_IOCON, 0, 19, (IOCON_FUNC1 | IOCON_MODE_PULLUP));
 }
 
 void SER_Init (void) {
+	
+	uint8_t key;
+	int bytes;
 	
 	Init_UART_PinMux();
 	
@@ -64,21 +60,55 @@ void SER_Init (void) {
 	Chip_UART0_ConfigData(LPC_USART0, (UART0_LCR_WLEN8 | UART0_LCR_SBS_1BIT));
 	Chip_UART0_SetupFIFOS(LPC_USART0, (UART0_FCR_FIFO_EN | UART0_FCR_TRG_LEV2));
 	Chip_UART0_TXEnable(LPC_USART0);
+	
+	
+	/* Before using the ring buffers, initialize them using the ring
+	   buffer init function */
+	RingBuffer_Init(&rxring, rxbuff, 1, UART_RRB_SIZE);
+	RingBuffer_Init(&txring, txbuff, 1, UART_SRB_SIZE);
+
+	/* Enable receive data and line status interrupt */
+	Chip_UART0_IntEnable(LPC_USART0, (UART0_IER_RBRINT | UART0_IER_RLSINT));
+
+	/* Enable UART 0 interrupt */
+	NVIC_EnableIRQ(USART0_IRQn);
+
+	/* Send initial messages */
+	Chip_UART0_SendRB(LPC_USART0, &txring, inst1, sizeof(inst1) - 1);
+	Chip_UART0_SendRB(LPC_USART0, &txring, inst2, sizeof(inst2) - 1);
+
+	/* Poll the receive ring buffer for the ESC (ASCII 27) key */
+	key = 0;
+//	while (key != ' ') {
+//		bytes = Chip_UART0_ReadRB(LPC_USART0, &rxring, &key, 1);
+//		if (bytes > 0) {
+//			/* Wrap value back around */
+//			if (Chip_UART0_SendRB(LPC_USART0, &txring, (const uint8_t *) &key, 1) != 1) {
+//			}
+//		}
+//	}
+}
+
+
+/**
+ * @brief	UART interrupt handler using ring buffers
+ * @return	Nothing
+ */
+void USART0_IRQHandler(void)
+{
+	/* Want to handle any errors? Do it here. */
+
+	/* Use default ring buffer handler. Override this with your own
+	   code if you need more capability. */
+	Chip_UART0_IRQRBHandler(LPC_USART0, &rxring, &txring);
 }
 
 //====================================================================================
 int main()
 {
-	#define LED 2
 	
 	SystemCoreClockUpdate();
-
-	// Enable GPIO Clock ( powers the GPIO peripheral )
-	//LPC_SYSCON->SYSAHBCLKCTRL |= (1<<6);
-
-	// Select GPIO Mode and disable analog mode, refer to User Manual - UM10524
-	//LPC_IOCON->PIO0_2 = 0;
-	//LPC_IOCON->PIO1_20 = 0;
+	LPC_SYSCTL->SYSAHBCLKCTRL |= (1<<16);
 	
 	Chip_GPIO_Init(LPC_GPIO);
 
@@ -92,12 +122,20 @@ int main()
 }
 
 
+
 __task void test(void)
 {
+	
+	int msg_len = 0;
+	int clockRate = Chip_Clock_GetMainClockRate();
+	msg_len = snprintf(message, sizeof(message), "Main clock is: %d\r\n", clockRate);
+	Chip_UART0_SendRB(LPC_USART0, &txring, message, msg_len);
+	
 	for(;;)
 	{
 		os_dly_wait(50);
-		Chip_UART0_Send(LPC_USART0, "Sveiki", strlen("Sveiki"));
+		clockRate = Chip_Clock_GetMainClockRate();
+		Chip_UART0_SendRB(LPC_USART0, &txring, "Sveiki\r\n", strlen("Sveiki\r\n"));
 		Chip_GPIO_WriteDirBit(LPC_GPIO, 0, 2, 0);
 
 		os_dly_wait(100);

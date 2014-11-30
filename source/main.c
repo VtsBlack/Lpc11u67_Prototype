@@ -17,10 +17,11 @@
 
 #include "RTL.h"
 
-
+/*
+ * neededd for LPC open libs
+ */
 const uint32_t OscRateIn = 12000000;
 const uint32_t RTCOscRateIn = 32768;
-
 
 /* Transmit and receive ring buffers */
 STATIC RINGBUFF_T txring, rxring;
@@ -39,15 +40,24 @@ const char inst2[] = "Press a key to echo it back or ESC to quit\r\n";
 char message[256] = {0};
 
 
-__task void test(void);
+/*
+	Task Prototype
+ */
+__task void InitTask(void);
 
 
+/**
+ * [Init_UART_PinMux Sets 18 and 19 pins to uart mode]
+ */
 static void Init_UART_PinMux(void)
 {
 	Chip_IOCON_PinMuxSet(LPC_IOCON, 0, 18, (IOCON_FUNC1 | IOCON_MODE_PULLUP | IOCON_DIGMODE_EN));
 	Chip_IOCON_PinMuxSet(LPC_IOCON, 0, 19, (IOCON_FUNC1 | IOCON_MODE_PULLUP));
 }
 
+/**
+ * [SER_Init  Initalize Uart Driver]
+ */
 void SER_Init (void) {
 	
 	uint8_t key;
@@ -103,38 +113,44 @@ void USART0_IRQHandler(void)
 	Chip_UART0_IRQRBHandler(LPC_USART0, &rxring, &txring);
 }
 
-//====================================================================================
-int main()
+/**
+ * [main Program entry]
+ * @return [description]
+ */
+int main(void)
 {
 	
 	SystemCoreClockUpdate();
+	/* Thin line enables clock to peripherals */
 	LPC_SYSCTL->SYSAHBCLKCTRL |= (1<<16);
 	
-	Chip_GPIO_Init(LPC_GPIO);
-
-
-	// Set the pin direction, set high for an output
-	Chip_GPIO_SetPinDIR(LPC_GPIO, 0, 2, 1);
-
-	SER_Init();
-	
-	os_sys_init(test);
+	/* Run Init Task */
+	os_sys_init(InitTask);
 }
 
-
-
-__task void test(void)
+/**
+ * [InitTask description]
+ */
+__task void InitTask(void)
 {
 	
 	int msg_len = 0;
 	int clockRate = Chip_Clock_GetMainClockRate();
+
+	/* Enabled Clock To GPPIO */
+	Chip_GPIO_Init(LPC_GPIO);
+	// Set the pin direction, set high for an output LED2
+	Chip_GPIO_SetPinDIR(LPC_GPIO, 0, 2, 1);
+	/* Serial Driver Enable */
+	SER_Init();
+
 	msg_len = snprintf(message, sizeof(message), "Main clock is: %d\r\n", clockRate);
 	Chip_UART0_SendRB(LPC_USART0, &txring, message, msg_len);
 	
 	for(;;)
 	{
 		os_dly_wait(50);
-		clockRate = Chip_Clock_GetMainClockRate();
+
 		Chip_UART0_SendRB(LPC_USART0, &txring, "Sveiki\r\n", strlen("Sveiki\r\n"));
 		Chip_GPIO_WriteDirBit(LPC_GPIO, 0, 2, 0);
 
@@ -144,3 +160,4 @@ __task void test(void)
 	}
 }
 
+/* End Of File */

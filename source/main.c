@@ -15,7 +15,7 @@
 
 #include "chip.h"
 
-#include "RTL.h"
+#include "cmsis_os.h"
 
 /*
  * neededd for LPC open libs
@@ -43,9 +43,9 @@ char message[256] = {0};
 /*
 	Task Prototype
  */
-__task void InitTask(void);
+void InitTask(const void *arg);
 
-
+osThreadDef(InitTask, osPriorityNormal, 1, 0);
 /**
  * [Init_UART_PinMux Sets 18 and 19 pins to uart mode]
  */
@@ -125,13 +125,17 @@ int main(void)
 	LPC_SYSCTL->SYSAHBCLKCTRL |= (1<<16);
 	
 	/* Run Init Task */
-	os_sys_init(InitTask);
+    osThreadCreate (osThread(InitTask), NULL);
+    
+    while (1) {
+        osDelay(1000);
+    }
 }
 
 /**
  * [InitTask description]
  */
-__task void InitTask(void)
+void InitTask(const void *arg)
 {
 	
 	int msg_len = 0;
@@ -149,12 +153,12 @@ __task void InitTask(void)
 	
 	for(;;)
 	{
-		os_dly_wait(50);
+		osDelay(500);
 
 		Chip_UART0_SendRB(LPC_USART0, &txring, "Sveiki\r\n", strlen("Sveiki\r\n"));
 		Chip_GPIO_WriteDirBit(LPC_GPIO, 0, 2, 0);
 
-		os_dly_wait(100);
+		osDelay(1000);
 		Chip_GPIO_WriteDirBit(LPC_GPIO, 0, 2, 1);
 
 	}

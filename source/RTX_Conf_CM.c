@@ -9,7 +9,7 @@
  *      Copyright (c) 2004-2011 KEIL - An ARM Company. All rights reserved.
  *---------------------------------------------------------------------------*/
 
-#include <RTL.h>
+#include <cmsis_os.h>
 
 /*----------------------------------------------------------------------------
  *      RTX User configuration part BEGIN

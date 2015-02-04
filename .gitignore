@@ -5,3 +5,4 @@ prj/lst/*
 *.User
 lpcopen_2_06_keil_iar_manley_11u68/applications/*
 lpcopen_2_06_keil_iar_manley_11u68/software/freertos/*
+!\lpcopen_2_06_keil_iar_manley_11u68\applications\lpc11u6x\startup_code*

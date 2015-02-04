@@ -59,6 +59,7 @@ void Chip_SetupIrcClocking(void)
 
 	/* Turn on the IRC by clearing the power down bit */
 	Chip_SYSCTL_PowerUp(SYSCTL_POWERDOWN_IRC_PD);
+    
 
 	/* Select the PLL input in the IRC */
 	Chip_Clock_SetSystemPLLSource(SYSCTL_PLLCLKSRC_IRC);
@@ -164,5 +165,5 @@ void Chip_SetupXtalClocking(void)
 void Chip_SystemInit(void)
 {
 	/* Initial internal clocking */
-	Chip_SetupXtalClocking();
+	Chip_SetupIrcClocking();
 }

@@ -414,10 +414,12 @@
               <FileType>1</FileType>
               <FilePath>..\source\main.c</FilePath>
             </File>
+            <File>
+              <FileName>Debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\Debug.c</FilePath>
+            </File>
           </Files>
-        </Group>
-        <Group>
-          <GroupName>core</GroupName>
         </Group>
         <Group>
           <GroupName>LPC OPEN</GroupName>
@@ -461,6 +463,21 @@
               <FileName>sysinit_11u6x.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\sysinit_11u6x.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c_11u6x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\i2c_11u6x.c</FilePath>
+            </File>
+            <File>
+              <FileName>pinint_11u6x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\pinint_11u6x.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssp_11u6x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lpcopen_2_06_keil_iar_manley_11u68\software\lpc_core\lpc_chip\chip_11u6x\ssp_11u6x.c</FilePath>
             </File>
           </Files>
         </Group>

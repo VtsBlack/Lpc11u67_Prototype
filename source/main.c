@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "chip.h"
+#include "Includes.h"
 
 #include "cmsis_os.h"
 
@@ -25,22 +25,11 @@ const uint32_t RTCOscRateIn = 32768;
 
 extern void SystemCoreClockUpdateX (void);
 
-/* Transmit and receive ring buffers */
-STATIC RINGBUFF_T txring, rxring;
 
-/* Transmit and receive ring buffer sizes */
-#define UART_SRB_SIZE 128	/* Send */
-#define UART_RRB_SIZE 32	/* Receive */
-
-/* Transmit and receive buffers */
-static uint8_t rxbuff[UART_RRB_SIZE], txbuff[UART_SRB_SIZE];
 
 
 const char inst1[] = "LPC11u6x UART example using ring buffers\r\n";
 const char inst2[] = "Press a key to echo it back or ESC to quit\r\n";
-
-char message[256] = {0};
-
 
 /*
 	Task Prototype
@@ -62,9 +51,6 @@ static void Init_UART_PinMux(void)
  */
 void SER_Init (void) {
 	
-	uint8_t key;
-	int bytes;
-	
 	Init_UART_PinMux();
 	
   Chip_UART0_Init(LPC_USART0);
@@ -76,8 +62,7 @@ void SER_Init (void) {
 	
 	/* Before using the ring buffers, initialize them using the ring
 	   buffer init function */
-	RingBuffer_Init(&rxring, rxbuff, 1, UART_RRB_SIZE);
-	RingBuffer_Init(&txring, txbuff, 1, UART_SRB_SIZE);
+	debug_uart_rb_init();
 
 	/* Enable receive data and line status interrupt */
 	Chip_UART0_IntEnable(LPC_USART0, (UART0_IER_RBRINT | UART0_IER_RLSINT));
@@ -86,34 +71,10 @@ void SER_Init (void) {
 	NVIC_EnableIRQ(USART0_IRQn);
 
 	/* Send initial messages */
-	Chip_UART0_SendRB(LPC_USART0, &txring, inst1, sizeof(inst1) - 1);
-	Chip_UART0_SendRB(LPC_USART0, &txring, inst2, sizeof(inst2) - 1);
-
-	/* Poll the receive ring buffer for the ESC (ASCII 27) key */
-	key = 0;
-//	while (key != ' ') {
-//		bytes = Chip_UART0_ReadRB(LPC_USART0, &rxring, &key, 1);
-//		if (bytes > 0) {
-//			/* Wrap value back around */
-//			if (Chip_UART0_SendRB(LPC_USART0, &txring, (const uint8_t *) &key, 1) != 1) {
-//			}
-//		}
-//	}
+	Debug(inst1);
+	Debug(inst2);
 }
 
-
-/**
- * @brief	UART interrupt handler using ring buffers
- * @return	Nothing
- */
-void USART0_IRQHandler(void)
-{
-	/* Want to handle any errors? Do it here. */
-
-	/* Use default ring buffer handler. Override this with your own
-	   code if you need more capability. */
-	Chip_UART0_IRQRBHandler(LPC_USART0, &rxring, &txring);
-}
 
 /**
  * [main Program entry]
@@ -140,24 +101,24 @@ int main(void)
 void InitTask(const void *arg)
 {
 	
-	int msg_len = 0;
 	int clockRate = Chip_Clock_GetMainClockRate();
 
 	/* Enabled Clock To GPPIO */
 	Chip_GPIO_Init(LPC_GPIO);
 	// Set the pin direction, set high for an output LED2
 	Chip_GPIO_SetPinDIR(LPC_GPIO, 0, 2, 1);
+    Chip_GPIO_SetPinDIR(LPC_GPIO, 1, 20, 1);
+    Chip_GPIO_WriteDirBit(LPC_GPIO, 1, 20, 1);
 	/* Serial Driver Enable */
 	SER_Init();
 
-	msg_len = snprintf(message, sizeof(message), "Main clock is: %d\r\n", clockRate);
-	Chip_UART0_SendRB(LPC_USART0, &txring, message, msg_len);
+	Debug("Main clock is: %d\r\n", clockRate);
 	
 	for(;;)
 	{
 		osDelay(500);
 
-		Chip_UART0_SendRB(LPC_USART0, &txring, "Sveiki\r\n", strlen("Sveiki\r\n"));
+		Debug("Sveiki\r\n");
 		Chip_GPIO_WriteDirBit(LPC_GPIO, 0, 2, 0);
 
 		osDelay(1000);

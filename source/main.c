@@ -23,6 +23,8 @@
 const uint32_t OscRateIn = 12000000;
 const uint32_t RTCOscRateIn = 32768;
 
+extern void SystemCoreClockUpdateX (void);
+
 /* Transmit and receive ring buffers */
 STATIC RINGBUFF_T txring, rxring;
 
@@ -120,7 +122,7 @@ void USART0_IRQHandler(void)
 int main(void)
 {
 	
-	SystemCoreClockUpdate();
+	SystemCoreClockUpdateX();
 	/* Thin line enables clock to peripherals */
 	LPC_SYSCTL->SYSAHBCLKCTRL |= (1<<16);
 	
